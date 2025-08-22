@@ -120,26 +120,6 @@ const Users: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  // Ouvrir le formulaire pour modifier
-  const openEditModal = (user: UserDetail) => {
-    setCurrentUser({
-      id: user.id,
-      nom: user.nom,
-      prenom: user.prenom,
-      email: user.email,
-      password: '', // Ne pas pré-remplir le mot de passe
-      role: user.role,
-      ecole: user.role === 'stagiaire' ? user.Stagiaire?.ecole || '' : '',
-      filiere: user.role === 'stagiaire' ? user.Stagiaire?.filiere || '' : '',
-      niveau: user.role === 'stagiaire' ? user.Stagiaire?.niveau || '' : '',
-      specialite: user.role === 'encadrant' ? user.Encadrant?.specialite || '' : '',
-      departement: user.role === 'encadrant' ? (user.Encadrant?.Departement?.nom || '') : '',
-      cv: null,
-      lettre_motivation: null,
-    });
-    setIsModalOpen(true);
-  };
-
   const closeModal = () => {
     setIsModalOpen(false);
     setCurrentUser(null);
@@ -223,23 +203,22 @@ const Users: React.FC = () => {
     }
   };
 
+  
   return (
     <div className="p-6 space-y-10">
       <Section
         title="Encadrants"
         data={encadrants}
         onAdd={() => openModal('encadrant')}
-        onEdit={openEditModal} // Assurez-vous que cette ligne est présente
         onDelete={(id) => handleDelete(id)}
       />
+
       <Section
         title="Stagiaires"
         data={stagiaires}
         onAdd={() => openModal('stagiaire')}
-        onEdit={openEditModal} // Assurez-vous que cette ligne est présente
         onDelete={(id) => handleDelete(id)}
       />
-
 
       {isModalOpen && currentUser && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center">
@@ -421,13 +400,11 @@ interface SectionProps {
   title: string;
   data: UserDetail[];
   onAdd: () => void;
-  onEdit: (user: UserDetail) => void;
   onDelete: (id: number) => void;
-  
   
 }
 
-const Section: React.FC<SectionProps> = ({ title, data, onAdd, onEdit,onDelete }) => (
+const Section: React.FC<SectionProps> = ({ title, data, onAdd, onDelete }) => (
   <section>
     <div className="flex justify-between items-center mb-4">
       <h2 className="text-xl font-bold text-indigo-700">{title}</h2>
@@ -510,19 +487,11 @@ const Section: React.FC<SectionProps> = ({ title, data, onAdd, onEdit,onDelete }
       )}
       <td className="p-3 border-b flex justify-center gap-3">
         <button
-         className="text-blue-500 hover:text-blue-700"
-         onClick={() => onEdit(u)} // Utilisation de onEdit ici
-        >
-          Modifier
-        </button>
-        <button
           className="text-red-500 hover:text-red-700"
           onClick={() => onDelete(u.id!)}
         >
           <FiTrash2 />
         </button>
-
-        
       </td>
     </tr>
   ))}

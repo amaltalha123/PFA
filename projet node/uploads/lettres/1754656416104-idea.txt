@@ -1,0 +1,53 @@
+** Les tickets: verifier si le stagiaire est le possesseur du stage (done)
+** les notes : update/delete verifier si le stagiare est le possesseur de la note (done)
+** Rapport : verifier si le stagiaire ets le possesseur du stage (done)
+** Evaluation du rapport: Verifier si l'encadrant est le possesseur du stage 
+** du mm pour evaluation du stagiaire
+** mettre done à une mission 
+
+
+(note, Stagiaire, Stage, "stage", "stagiare") vérifi seulement si le stagiare existe ou pas 
+(note, Stagiaire,"stagiare")
+
+
+
+il faut modifier le profile pour récupérer le json complet
+
+** mission/all : verification  => StageOwnership mais sans findOne (done)
+** ticket/all : verification => StageOwnership mais sans findOne (done)
+** notes/all : verification  => StageOwnership mais sans findOne et Stagiaire Comme Model (done)
+** VerifyObjectOwnershipOr (rapport_evalaution 'get' and 'post' (done), 
+** evaluation 'get' and 'post'=> (done)
+** Verification de Ownership pour Document.routes.js 
+    ** Verfication de evaluation 'post' => done
+    ** Verification de evaluation 'get' => done
+    ** Verification de l'attestation 'get' => done
+
+**Verication de l'evaluation  rapport (tout les evaluations)
+    **get :(done)
+    **post: = rapport_id ->stage_id->encadrant_id->user_id (done)
+
+
+statiqtique:
+*****Admin
+
+**nombre de stage (PFA,PFE,Initiation) graphe cercle
+**Nombre totale des stagiaire
+**nombre des encadrant par departement 
+**les notifications
+
+
+
+*** le raport ne contient pas la relation stage_id dans index.js
+
+*** Les statistiques:
+Encadrant:
+-> l'ensemble des stages d'un encadrant(Json) stage include stgiaire et stagiare include user
+->l'ensemble des mission d'un stage (Json)
+->l'ensemble des tickets d'un stage(Json)
+->Les ticket non commenté 
+->les mission qui ne son pas done 
+
+Stagiaire
+->mes stages -> ->Les ticket non commenté ->les mission qui ne son pas done 
+

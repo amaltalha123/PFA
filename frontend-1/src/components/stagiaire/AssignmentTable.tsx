@@ -1,0 +1,75 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Utilisez useNavigate
+import { Assignment } from "../../types/assignment-types";
+import AvatarBadge from "../ui/AvatarBadge";
+import StatusPill from "../ui/StatusPill";
+import { format } from 'date-fns'; // Importer la fonction format
+
+interface AssignmentTableProps {
+  assignments: Assignment[];
+  setAssignments: React.Dispatch<React.SetStateAction<Assignment[]>>;
+  openEncadrantDialog: (encadrantData: any) => void;
+}
+
+const AssignmentTable: React.FC<AssignmentTableProps> = ({ assignments, setAssignments, openEncadrantDialog }) => {
+  const navigate = useNavigate(); // Utilisez useNavigate
+
+  const handleRowClick = (assignment: Assignment) => {
+    localStorage.setItem('selectedAssignment', JSON.stringify(assignment)); 
+    navigate('/stagiaire/AssignmentDetailStagiaire'); // Naviguer vers la page de détails sans passer l'ID dans l'URL
+  };
+
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full border-collapse">
+        <thead className="bg-gray-50">
+          <tr>
+            <th className="p-3 text-left">Encadrant</th>
+            <th className="p-3 text-left">Début</th>
+            <th className="p-3 text-left">Fin</th>
+            <th className="p-3 text-left">Statut</th> 
+          </tr>
+        </thead>
+        <tbody>
+          {assignments.map((assignment) => (
+            <tr 
+              key={assignment.id} 
+              className="border-b hover:bg-gray-50 cursor-pointer"
+              onClick={() => handleRowClick(assignment)} // Ajoutez l'événement de clic ici
+            >
+              <td 
+                className="p-3"
+                onClick={(e) => {
+                  e.stopPropagation(); // Empêche la propagation pour éviter de naviguer
+                  if (assignment.Encadrant) {
+                    openEncadrantDialog(assignment.Encadrant); // Ouvre le dialogue du Encadrant
+                  }
+                }}
+              >
+                {assignment.Encadrant ? (
+                  <>
+                    <AvatarBadge initials={{ nom: assignment.Encadrant.User.nom, prenom: assignment.Encadrant.User.prenom }} />
+                    <span>
+                      {assignment.Encadrant.User.nom} {assignment.Encadrant.User.prenom}
+                    </span>
+                  </>
+                ) : (
+                  <span>Aucun Encadrant</span>
+                )}
+              </td>
+
+              {/* Formatage des dates */}
+              <td className="p-3">{format(new Date(assignment.date_debut), 'dd/MM/yyyy')}</td>
+              <td className="p-3">{format(new Date(assignment.date_fin), 'dd/MM/yyyy')}</td>
+              <td className="p-3">
+                <StatusPill status={assignment.status} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default AssignmentTable;

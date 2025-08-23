@@ -28,8 +28,8 @@ jobs:
           docker compose build
           
           # Tagger les images avec des tags spécifiques
-          docker tag amaltalha/projet-node:latest amaltalha/projet-node:$GITHUB_SHA
-          docker tag amaltalha/projet-frontend:latest amaltalha/projet-frontend:$GITHUB_SHA
+          docker tag projet-node:latest amaltalha/projet-node:$GITHUB_SHA
+          docker tag projetpfav10-frontend:latest amaltalha/projet-frontend:$GITHUB_SHA
           
           # Pousser toutes les versions taggées
           docker push amaltalha/projet-node:latest

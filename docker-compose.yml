@@ -23,6 +23,7 @@ services:
 
   backend:
     build: ./projet-node
+    image: amaltalha/projet-node:latest
     container_name: projet-node
     restart: always
     ports:
@@ -37,6 +38,7 @@ services:
 
   frontend:
     build: ./frontend-1
+    image: amaltalha/projet-frontend:latest 
     container_name: projet-frontend
     restart: always
     ports:

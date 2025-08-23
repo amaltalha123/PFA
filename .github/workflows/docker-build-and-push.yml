@@ -24,15 +24,12 @@ jobs:
 
       - name: Build all images and push with specific tags
         run: |
-          # Construire toutes les images
           docker compose build
-          
-          # Tagger les images avec des tags spécifiques
-          docker tag projet-node:latest amaltalha/projet-node:$GITHUB_SHA
-          docker tag projetpfav10-frontend:latest amaltalha/projet-frontend:$GITHUB_SHA
-          
-          # Pousser toutes les versions taggées
           docker push amaltalha/projet-node:latest
-          docker push amaltalha/projet-node:$GITHUB_SHA
           docker push amaltalha/projet-frontend:latest
-          docker push amaltalha/projet-frontend:$GITHUB_SHA
+
+          # Ajout d un tag unique basé sur le commit
+          docker tag amaltalha/projet-node:latest amaltalha/projet-node:${GITHUB_SHA}
+          docker tag amaltalha/projet-frontend:latest amaltalha/projet-frontend:${GITHUB_SHA}
+          docker push amaltalha/projet-node:${GITHUB_SHA}
+          docker push amaltalha/projet-frontend:${GITHUB_SHA}

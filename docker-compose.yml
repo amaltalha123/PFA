@@ -22,17 +22,17 @@ services:
       MYSQL_DATABASE: stage
 
   backend:
-    build: ./projet node
+    build: ./projet-node
     container_name: projet-node
     restart: always
     ports:
       - "5001:5001"
     volumes:
-      - ./projet node:/app
+      - ./projet-node:/app
     depends_on:
       - db
     env_file:
-      - ./projet node/.env 
+      - ./projet-node/.env 
     command: sh -c "npx wait-on tcp:db:3306 && node src/initAdmin.js && npm start"
 
   frontend:

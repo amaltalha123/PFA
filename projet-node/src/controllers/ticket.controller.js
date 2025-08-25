@@ -21,8 +21,11 @@ exports.addTicket = async (req, res) => {
       success: true,
       message: "Ticket ajouté avec succès.",
       data: {
-        contenue: Ticket.Contenue,
-        piece_jointe: Ticket.piece_jointe,
+        id:Ticket.id,
+        Contenue: Ticket.Contenue,
+        piece_jointe: Ticket.piece_jointe 
+        ? `${req.protocol}://${req.get('host')}/${Ticket.piece_jointe}`
+        : null,
         commentaire_encadrant: Ticket.commentaire_encadrant,
         updatedAt: Ticket.updatedAt
       }

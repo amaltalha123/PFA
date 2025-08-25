@@ -118,7 +118,7 @@ const handleSubmitTicket = async () => {
 
     if (response.data.success) {
       // Mettre à jour l'état des tickets
-      setTicketsData(prevTickets => [...prevTickets, response.data.ticket]);
+      setTicketsData(prevTickets => [...prevTickets, response.data.data]);
       handleCloseDialog();
     } else {
       console.error(response.data.message);

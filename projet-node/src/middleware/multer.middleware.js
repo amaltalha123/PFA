@@ -8,12 +8,7 @@ const storage = multer.diskStorage({
     } else if (file.fieldname === 'lettre_motivation') {
       cb(null, 'uploads/lettres');
     } else if (file.fieldname === 'piece_jointe') {
-      // Vérifiez si le champ 'piece_jointe' est présent dans le corps de la requête
-      if (!req.body.piece_jointe) {
-        // Si aucune pièce jointe n'est fournie, passez à la prochaine étape
-        return cb(null, null); // null pour indiquer qu'aucun fichier ne sera enregistré
-      }
-      cb(null, 'uploads/tickets'); // Sinon, enregistrez le fichier
+      cb(null, 'uploads/tickets'); 
     } else if (file.fieldname === 'fichier') {
       cb(null, 'uploads/rapports');
     } else {

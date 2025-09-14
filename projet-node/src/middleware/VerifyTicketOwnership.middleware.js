@@ -1,27 +1,40 @@
-module.exports = (Model,SecondModel, relatedModel, relationName1,relationName2) => {
+module.exports = (Model, SecondModel, relatedModel, relationName1, relationName2) => {
   return async (req, res, next) => {
-    const id = req.params.id;
-    const userId = req.user.id;
+    const id = req.params.id; // id de la mission
+    const userId = req.user.id; // id de l'utilisateur connecté
+    const idStage = req.params.idStage; // id du stage
 
     try {
-      const userRole1 = await SecondModel.findOne({where : {user_id: userId  }})
-      const userRole = await relatedModel.findOne({ where: { [`${relationName2}_id`]: userRole1.id } });
+      // Étape 1 : trouver l'encadrant || stagiaire lié à l'utilisateur
+      const userRole1 = await SecondModel.findOne({ where: { user_id: userId } });
+
+      //  si aucun trouvé
+      if (!userRole1) {
+        return res.status(403).json({ success:false, message: "Utilisateur non trouvé dans le modèle secondaire." });
+      }
+
+      // Étape 2 : vérifier que l'encadrant est bien lié au stage
+      const userRole = await relatedModel.findOne({ 
+        where: { 
+          [`${relationName2}_id`]: userRole1.id, 
+          id: idStage 
+        } 
+      });
 
       if (!userRole) {
         return res.status(403).json({ success:false, message: "Rôle introuvable pour cet utilisateur." });
       }
 
+      // Étape 3 : vérifier la mission (ou ressource)
       const resource = await Model.findOne({
         where: {
           id,
-          [`${relationName1}_id`]: userRole1.id
+          [`${relationName1}_id`]: idStage
         }
       });
 
-     
-
-      if (!resource  ) {
-        return res.status(403).json({success:false,  message: "Accès interdit à cette ressource." });
+      if (!resource) {
+        return res.status(403).json({ success:false, message: "Accès interdit à cette ressource." });
       }
 
       req.resource = resource;

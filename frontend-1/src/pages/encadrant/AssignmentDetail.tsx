@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Routes, Route } from 'react-router-dom';
-import axiosClient from '../../api/axiosClient';
+import { Routes, Route } from 'react-router-dom';
+
 import { Assignment } from '../../types/assignment-types';
 import Header from '../../components/ui/encadrant/Header';
+import StatusBadge from '../../components/ui/StatusBadge'
 import Mission from './Mission';
 import Tickets from './Tickets';
 import Rapport from './Rapport';
@@ -11,19 +12,42 @@ import Evaluation from './Evaluation';
 
 const AssignmentDetailEncadrant: React.FC = () => {
   const [assignment, setAssignment] = useState<Assignment | null>(null);
-  const [loading, setLoading] = useState(true);
+  // const [nonCommentedTickets, setNonComentedTickets] = useState<number | null>(null);
+  // const [incompleteMissions, setIncompleteMissions] = useState<number | null>(null);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+ useEffect(() => {
     const storedAssignment = localStorage.getItem('selectedAssignment');
     if (storedAssignment) {
       setAssignment(JSON.parse(storedAssignment));
     }
   }, []);
-
+  // useEffect(() => {
+  //   const fetchNonCommentedTicketsNumber = async () => {
+  //     if (!assignment) return;
+  //     try {
+  //       const response = await axiosClient.get(`/tickets/nonCommented/${assignment.id}`);
+  //       setNonComentedTickets(response.data.totaltickets);
+  //     } catch (error) {
+  //       console.error('Erreur:', error);
+  //     }
+  //   };
+  //   const fetchUndoneMissions = async () => {
+  //     if (!assignment) return;
+  //     try {
+  //       const response = await axiosClient.get(`/missions/incompletes/${assignment.id}`);
+  //       setIncompleteMissions(response.data.totalmissions);
+  //     } catch (error) {
+  //       console.error('Erreur:', error);
+  //     }
+  //   };
+  //   fetchUndoneMissions();
+  //   fetchNonCommentedTicketsNumber();
+  // }, [assignment]);
   if (!assignment) {
-    return <div>Loading...</div>; // Affiche un message de chargement si l'affectation n'est pas encore chargée
+    return <div>Loading...</div>; 
   }
-
+  
   return (
     <div className="container mx-auto p-6">
       {/* Header */}
@@ -50,19 +74,19 @@ const AssignmentDetailEncadrant: React.FC = () => {
         />
         
         {/* Statistiques */}
-        <div className="bg-white rounded-lg shadow-md p-6">
+        {/* <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-lg font-medium text-gray-900 mb-4">Statistiques</h3>
           <div className="flex flex-col space-y-2">
             <div className="flex justify-between items-center">
               <span className="font-medium text-gray-600">Tickets non commentés:</span>
-              <span className="text-xl font-bold text-blue-600">{ 0}</span>
+              <span className="text-xl font-bold text-blue-600">{nonCommentedTickets != null ? +nonCommentedTickets : 0}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="font-medium text-gray-600">Missions non terminées:</span>
-              <span className="text-xl font-bold text-red-600">{0}</span>
+              <span className="text-xl font-bold text-red-600">{incompleteMissions != null ? +incompleteMissions : 0}</span>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Routes pour les sections */}
@@ -109,14 +133,5 @@ const PersonCard: React.FC<{
   </div>
 );
 
-// Status Badge Component
-const StatusBadge: React.FC<{ status: 'en cours' | 'terminé' }> = ({ status }) => (
-  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-    status === 'en cours' 
-      ? 'bg-green-100 text-green-800' 
-      : 'bg-blue-100 text-blue-800'
-  }`}>
-    {status === 'en cours' ? 'En cours' : 'Terminé'}
-  </span>
-);
+
 export default AssignmentDetailEncadrant;

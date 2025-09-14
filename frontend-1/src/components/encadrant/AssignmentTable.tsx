@@ -7,11 +7,10 @@ import { format } from 'date-fns'; // Importer la fonction format
 
 interface AssignmentTableProps {
   assignments: Assignment[];
-  setAssignments: React.Dispatch<React.SetStateAction<Assignment[]>>;
   openStagiaireDialog: (stagiaireData: any) => void;
 }
 
-const AssignmentTable: React.FC<AssignmentTableProps> = ({ assignments, setAssignments, openStagiaireDialog }) => {
+const AssignmentTable: React.FC<AssignmentTableProps> = ({ assignments,openStagiaireDialog }) => {
   const navigate = useNavigate(); // Utilisez useNavigate
 
   const handleRowClick = (assignment: Assignment) => {

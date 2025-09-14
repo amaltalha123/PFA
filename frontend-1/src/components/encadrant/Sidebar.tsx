@@ -6,7 +6,7 @@ const Sidebar: React.FC = () => {
   const location = useLocation();
 
   const links = [
-    { to: '/encadrant/dashboard', label: 'Tableau de bord', icon: <FiHome />},
+    // { to: '/encadrant/dashboard', label: 'Tableau de bord', icon: <FiHome />},
     { to: '/encadrant/affectations', label: 'Affectations', icon: <FiUserCheck />},
   ];
 

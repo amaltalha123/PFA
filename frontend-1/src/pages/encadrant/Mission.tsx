@@ -114,7 +114,7 @@ const Mission: React.FC = () => {
       if (response.data.success) {
         const newTaskWithId = {
           ...response.data.data.Mission,
-          id: response.data.data.id
+          id: response.data.data.Mission.id
         };
         setTasks([...tasks, newTaskWithId]);
         setNewTask({ description: '', dueDate: '', status: 'En cours' }); // Réinitialiser le formulaire
@@ -128,8 +128,9 @@ const Mission: React.FC = () => {
   };
 
   const handleEditTask = (task: Task) => {
+     
     setEditingTask(task); // Mettre à jour l'état avec la tâche à modifier
-    setNewTask({ 
+    setNewTask({
       description: task.description, 
       dueDate: task.dueDate.split('T')[0], // Formatage de la date pour l'input
       status: task.status 
@@ -138,12 +139,20 @@ const Mission: React.FC = () => {
   };
 
 const handleUpdateTask = async () => {
-  if (!editingTask) return; // Assurez-vous qu'il y a une tâche à modifier
+  if (!editingTask) return; // s'assurer qu'il y a une tâche à modifier
 
-  console.log("Données envoyées:", { description: newTask.description, date_limite: newTask.dueDate });
+  console.log("Données envoyées:", { description: newTask.description, date_limite: newTask.dueDate,id:editingTask.id });
+  const selectedAssignment = localStorage.getItem('selectedAssignment');
+        if (!selectedAssignment) {
+          console.error('Aucun assignment sélectionné dans le localStorage.');
+          return;
+        }
 
+  const assignment = JSON.parse(selectedAssignment);
+  const assignmentId = assignment.id;
+  console.log(assignmentId);
   try {
-    const response = await axiosClient.put(`/mission/update/${editingTask.id}`, { 
+    const response = await axiosClient.put(`/mission/update/${editingTask.id}/${assignmentId}`, { 
       description: newTask.description, 
       date_limite: newTask.dueDate 
     });
@@ -173,7 +182,15 @@ const handleUpdateTask = async () => {
 
   const handleDeleteTask = async (taskId: number) => {
     try {
-      const response = await axiosClient.delete(`/mission/delete/${taskId}`);
+      const selectedAssignment = localStorage.getItem('selectedAssignment');
+        if (!selectedAssignment) {
+          console.error('Aucun assignment sélectionné dans le localStorage.');
+          return;
+        }
+
+      const assignment = JSON.parse(selectedAssignment);
+      const assignmentId = assignment.id;
+      const response = await axiosClient.delete(`/mission/delete/${taskId}/${assignmentId}`);
       if (response.data.success) {
         setTasks(tasks.filter(task => task.id !== taskId));
       } else {
@@ -242,7 +259,7 @@ const handleUpdateTask = async () => {
                   Annuler
                 </button>
                 <button
-                  onClick={editingTask ? handleUpdateTask : handleAddTask} // Appeler la fonction appropriée
+                  onClick={editingTask ? handleUpdateTask : handleAddTask} // Appeler la fonction update
                   className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
                 >
                   {editingTask ? 'Mettre à jour' : 'Créer'}

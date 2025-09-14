@@ -5,7 +5,7 @@ const authMiddleware = require('../middleware/auth.middleware');
 const roleMiddleware = require('../middleware/role.middleware');
 
 
-const verifyNoteOwnership = require('../middleware/VerifyTicketOwnership.middleware');
+const verifyNoteOwnership = require('../middleware/VerifyNotesOwnership.middleware');
 const { Stage ,Stagiaire,Notes } = require('../models');
 
 router.post('/notes/add', authMiddleware, roleMiddleware('stagiaire'), notesController.addNote);

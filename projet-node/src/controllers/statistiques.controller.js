@@ -1,4 +1,4 @@
-const { User,Rapport, evaluationRapport,document,Evaluation,Stage,Encadrant, Stagiaire, ticket,Departement } = require('../models');
+const { User,Rapport, evaluationRapport,document,Evaluation,Stage,Encadrant, Stagiaire, ticket,Departement,mission } = require('../models');
 const { Op } = require('sequelize');
 
 
@@ -57,18 +57,20 @@ const getTotalEncadrant = async (req, res) => {
       ]
     });
 
-    const processedUsers = users.map(user => {
-      const userData = user.get({ plain: true });
-      const encadrantData = user.Encadrant ? user.Encadrant.get({ plain: true }) : null;
+   const processedUsers = users.map(user => {
+  const encadrantData = user.Encadrant;
 
-      return {
-        ...userData,
-        Encadrant: {
-          ...encadrantData,
-          Departement: encadrantData ? encadrantData.Departement : null // Ajout du département
+  return {
+    ...user.toJSON(), // convertir l'instance Sequelize en objet JS simple
+    Encadrant: encadrantData
+      ? {
+          id: encadrantData.id,
+          specialite: encadrantData.specialite,
+          Departement: encadrantData.Departement || null
         }
-      };
-    });
+      : null
+  };
+});
 
     return res.status(200).json({ 
       success: true,
@@ -86,6 +88,7 @@ const getTotalEncadrant = async (req, res) => {
 
 const getTotalfinishedStage = async (req, res) => {
   try {
+
     const today = new Date();
 
    const stages = await Stage.findAll({
@@ -159,12 +162,12 @@ const getTotalEncadrantOwnStage = async (req, res) => {
         }
       }
       const plainStage = stage.get({ plain: true });
-      const stagiaire = plainStage.Stagiaire; // Récupérer directement depuis plainStage
+      const stagiaire = plainStage.Stagiaire; 
 
       return {
         ...plainStage,
         Stagiaire: stagiaire ? {
-          ...stagiaire, // Utiliser directement stagiaire sans get()
+          ...stagiaire, 
           cv: stagiaire.cv 
             ? `${baseUrl}/${stagiaire.cv.replace(/\\/g, '/')}` 
             : null,
@@ -209,9 +212,13 @@ const getTotalStagiaireOwnStage = async (req, res) => {
 
 const getNonCommentedTicketsNumber = async (req, res) => {
  try{
-   
+    const stageId = req.params.id; 
+    const stage= await Stage.findByPk(stageId);
+    if(!stage){
+      return res.status(403).json({ success: true, message:"stage introuvable"});
+    }
     const tickets = await ticket.findAll({
-      where: { commentaire_encadrant: null }
+      where: { commentaire_encadrant: null ,stage_id:stageId}
     });
 
     return res.status(200).json({ success: true, tickets:tickets, totaltickets: tickets.length});
@@ -313,6 +320,22 @@ const getTotalStagiaireOwnStages = async (req, res) => {
   }
 }
 
+const getIncompleteMissions  =async (req, res) =>{
+try{
+    const stageId = req.params.id; 
+    const stage= await Stage.findByPk(stageId);
+    if(!stage){
+      return res.status(403).json({ success: true, message:"stage introuvable"});
+    }
+    const missions = await mission.findAll({
+      where: { done:false ,stage_id:stageId}
+    });
 
+    return res.status(200).json({ success: true, missions:missions, totalmissions: missions.length});
+ } catch(error) {
+       
+        return res.status(500).json({ success: false, message: "Erreur serveur", error: error.message });
+ }
+}
 
-module.exports = {getTotalStagiaires,getTotalEncadrant,getTotalActualStage,getTotalfinishedStage,getTotalEncadrantOwnStage,getNonCommentedTicketsNumber,StageByType,getTotalStagiaireOwnStages}
+module.exports = {getIncompleteMissions,getTotalStagiaires,getTotalEncadrant,getTotalActualStage,getTotalfinishedStage,getTotalEncadrantOwnStage,getNonCommentedTicketsNumber,StageByType,getTotalStagiaireOwnStages}

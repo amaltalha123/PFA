@@ -19,7 +19,7 @@ router.post(
   ticketController.addTicket
 );
 
-router.delete('/ticket/delete/:id', authMiddleware, roleMiddleware('stagiaire'), verifyTicketOwnership(ticket,Stagiaire,Stage,"stage","stagiare"), ticketController.deleteticket);
+router.delete('/ticket/delete/:id/:idStage', authMiddleware, roleMiddleware('stagiaire'), verifyTicketOwnership(ticket,Stagiaire,Stage,"stage","stagiare"), ticketController.deleteticket);
 router.put('/ticket/update/:id', 
   authMiddleware, 
   roleMiddleware('stagiaire'), 
@@ -28,6 +28,6 @@ router.put('/ticket/update/:id',
   ticketController.updateTicket
 );
 router.get('/ticket/all/:id', authMiddleware,roleMiddleware('encadrant','stagiaire'),verifyCollectionOwnership(ticket), ticketController.getTicketsByStageId);
-router.put('/ticket/addComment/:id', authMiddleware,roleMiddleware('encadrant'),verifyTicketOwnership(ticket,Encadrant,Stage,"stage","encadrant"), ticketController.ticketAddComment);
+router.put('/ticket/addComment/:id/:idStage', authMiddleware,roleMiddleware('encadrant'),verifyTicketOwnership(ticket,Encadrant,Stage,"stage","encadrant"), ticketController.ticketAddComment);
 
 module.exports = router;

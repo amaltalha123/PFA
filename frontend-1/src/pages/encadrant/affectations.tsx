@@ -14,15 +14,15 @@ const Affectation: React.FC = () => {
 
   const fetchAssignments = async () => {
     try {
-      const response = await axiosClient.get('/statistic/encadrant/toutMesStages');
-      setAssignments(response.data.stages);
+      const response = await axiosClient.get('/stage/all');
+      setAssignments(response.data.assignments);
     } catch (error) {
       console.error('Erreur:', error);
     }
   };
 
   useEffect(() => {
-    fetchAssignments(); // Récupère les affectations au chargement du composant
+    fetchAssignments(); 
   }, []);
 
   return (
@@ -31,7 +31,6 @@ const Affectation: React.FC = () => {
      
       <AssignmentTable 
         assignments={assignments} 
-        setAssignments={setAssignments} // Passez setAssignments ici
         openStagiaireDialog={openStagiaireDialog} 
        
       />

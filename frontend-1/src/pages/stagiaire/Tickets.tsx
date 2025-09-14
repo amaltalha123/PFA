@@ -88,7 +88,7 @@ const Tickets: React.FC = () => {
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
-    setNewTicket({ Contenue: '', piece_jointe: null }); // Réinitialiser le formulaire
+    setNewTicket({ Contenue: '', piece_jointe: null }); // Réinitialisation du formulaire
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -139,40 +139,44 @@ const handleSubmitTicket = async () => {
   return (
     <div className="p-6">
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
-        <Typography variant="h4" component="h2" sx={{ fontWeight: 700 }}>
-          Tickets de support
-        </Typography>
-        <Button variant="contained" onClick={handleOpenDialog}>
-          Ajouter un ticket
-        </Button>
-        <FormControl variant="outlined" size="small" sx={{ minWidth: 180 }}>
-          <InputLabel>Trier par date</InputLabel>
-          <Select
-            value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value as 'newest' | 'oldest')}
-            label="Trier par date"
-            startAdornment={
-              sortOrder === 'newest' ? 
-                <ArrowDownward color="action" sx={{ mr: 1 }} /> : 
-                <ArrowUpward color="action" sx={{ mr: 1 }} />
-            }
-          >
-            <MenuItem value="newest">
-              <Box display="flex" alignItems="center">
-                <ArrowDownward fontSize="small" sx={{ mr: 1 }} />
-                Plus récent
-              </Box>
-            </MenuItem>
-            <MenuItem value="oldest">
-              <Box display="flex" alignItems="center">
-                <ArrowUpward fontSize="small" sx={{ mr: 1 }} />
-                Plus ancien
-              </Box>
-            </MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
-      
+  <Typography variant="h4" component="h2" sx={{ fontWeight: 700 }}>
+    Tickets de support
+  </Typography>
+
+  <Box display="flex" alignItems="center" gap={2}>
+    <FormControl variant="outlined" size="small" sx={{ minWidth: 180 }}>
+      <InputLabel>Trier par date</InputLabel>
+      <Select
+        value={sortOrder}
+        onChange={(e) => setSortOrder(e.target.value as 'newest' | 'oldest')}
+        label="Trier par date"
+        startAdornment={
+          sortOrder === 'newest' ? 
+            <ArrowDownward color="action" sx={{ mr: 1 }} /> : 
+            <ArrowUpward color="action" sx={{ mr: 1 }} />
+        }
+      >
+        <MenuItem value="newest">
+          <Box display="flex" alignItems="center">
+            <ArrowDownward fontSize="small" sx={{ mr: 1 }} />
+            Plus récent
+          </Box>
+        </MenuItem>
+        <MenuItem value="oldest">
+          <Box display="flex" alignItems="center">
+            <ArrowUpward fontSize="small" sx={{ mr: 1 }} />
+            Plus ancien
+          </Box>
+        </MenuItem>
+      </Select>
+    </FormControl>
+
+    <Button variant="contained" onClick={handleOpenDialog}>
+      Ajouter un ticket
+    </Button>
+  </Box>
+</Box>
+
       {sortedTickets.length === 0 ? (
         <Paper elevation={0} sx={{ p: 4, textAlign: 'center' }}>
           <Typography variant="h6" color="text.secondary">
@@ -275,7 +279,7 @@ const TicketCard: React.FC<{ ticket: Ticket; assignment: Assignment | null; setT
         {/* Student Contenue */}
         <div className="flex mt-3">
           <Avatar 
-            src={stagiaire ? stagiaire.avatar : '/path/to/default/avatar.png'} // Utilisez une image par défaut si l'avatar est manquant
+            src={stagiaire ? stagiaire.avatar : '/path/to/default/avatar.png'} 
             sx={{ width: 40, height: 40, mr: 2 }}
           >
             <Person />

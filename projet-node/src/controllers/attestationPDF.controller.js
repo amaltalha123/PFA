@@ -4,11 +4,15 @@ const fs = require('fs');
 const path = require('path');
 
 const generateAttestationPDF = async (req, res) => {
-  const stagiaireId = req.params.id;
+  const stageId = req.params.id;
 
   try {
-    const stagiaire = await Stagiaire.findByPk(stagiaireId);
-    const stage = await Stage.findOne({ where: { stagiare_id: stagiaireId } });
+    const stage = await Stage.findByPk(stageId);
+    if(!stage){
+      return res.status(403).json({ success: false, message: "Le stage est innexistant" });
+    }
+    const stagiaire = await Stagiaire.findByPk(stage.stagiare_id);
+    
 
     const now = new Date();
     const dateFin = new Date(stage.date_fin);

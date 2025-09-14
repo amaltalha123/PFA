@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axiosClient from '../../api/axiosClient';
 import { Assignment, Documents } from '../../types/assignment-types';
+import StatusBadge from '../../components/ui/StatusBadge'
 
 const AssignmentDetail: React.FC = () => {
   const [assignment, setAssignment] = useState<Assignment | null>(null);
@@ -35,9 +36,25 @@ const AssignmentDetail: React.FC = () => {
 
   const handleGenerateCertificate = async (id:number) => {
      try {
-        const res = await axiosClient.post(`/attestation/generate/${id}`);
+        console.log(id);
+        const res = await axiosClient.post(`/attestation/generate/${id}`,{}, {
+          headers: { 'Content-Type': 'application/json' }
+        });
+
         if (res.data.success) {
           console.log(res.data.message);
+          try {
+            const res = await axiosClient.get(`/stage/documents/${id}`);
+            if (res.data.success) {
+              setDocuments(res.data.documents);
+            }
+          } catch (error) {
+            console.error('Error fetching documents:', error);
+          } finally {
+            setLoading(false);
+          }
+        }else{
+          alert(res.data.message);
         }
       } catch (error) {
         console.error('Error fetching documents:', error);
@@ -121,7 +138,7 @@ const AssignmentDetail: React.FC = () => {
              documents?.Rapport?.fichier && 
              documents?.Document?.document_evaluation ? (
               <button
-              onClick={() => handleGenerateCertificate(assignment.Stagiaire.id)}
+              onClick={() => handleGenerateCertificate(assignment.id)}
                 className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
               >
                 Générer l'attestation
@@ -208,14 +225,22 @@ const DocumentCard: React.FC<{
 );
 
 // Status Badge Component
-const StatusBadge: React.FC<{ status: 'en cours' | 'terminé' }> = ({ status }) => (
-  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-    status === 'en cours' 
-      ? 'bg-green-100 text-green-800' 
-      : 'bg-blue-100 text-blue-800'
-  }`}>
-    {status === 'en cours' ? 'En cours' : 'Terminé'}
-  </span>
-);
+// const StatusBadge: React.FC<{ status: 'en cours' | 'terminé' |'en attente' }> = ({ status }) => {
+//   let classe='';
+//   if(status==='terminé'){
+//      classe='bg-blue-100 text-green-800';
+//   }else if(status==='en attente'){
+//      classe='bg-red-100 text-red-800';
+//   }else {
+//     classe='bg-green-100 text-green-800';
+//   }
+//   return (
+//   <span className={`px-2 py-1 rounded-full text-xs font-medium ${classe}`}>
+//     {status === 'en cours' ? 'En cours' : status === 'terminé' ? 'Terminé' : 'En attente'}
+//   </span>
+// );
+
+// };
 
 export default AssignmentDetail;
+

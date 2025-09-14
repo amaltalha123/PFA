@@ -32,7 +32,10 @@ export interface Assignment {
   Encadrant: Encadrant;
   date_debut: string;
   date_fin: string;
-  status: 'en cours' | 'terminé';
+  type_stage:string;
+  sujet:string;
+  status: 'en cours' | 'terminé' | 'en attente';
+  etat:string;
 }
 
 export interface Rapport  {

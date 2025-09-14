@@ -63,7 +63,7 @@ export const useDialog = (): UseDialogReturn => {
           closeDialogs(); // Fermer le dialogue après ajout
           onStageAddedCallback(); // Appelle la fonction de mise à jour
         }} 
-        isOpen={isAddStageDialogOpen} // Passer la bonne valeur ici
+        isOpen={isAddStageDialogOpen} 
       />
     ) : null,
   };

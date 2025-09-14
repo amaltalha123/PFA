@@ -175,10 +175,11 @@ const TicketCard: React.FC<{ ticket: Ticket; assignment: Assignment | null; setT
   };
 
   const handleSubmitComment = async () => {
+    
     // Simuler l'envoi du commentaire au backend
     try {
       const updatedTicket = { ...ticket, commentaire_encadrant: comment };
-    const response = await axiosClient.put(`/ticket/addComment/${updatedTicket.id}`,{commentaire_encadrant: comment});
+    const response = await axiosClient.put(`/ticket/addComment/${updatedTicket.id}/${assignment.id}`,{commentaire_encadrant: comment});
     
     if(response.data.success){
        // Mettre à jour l'état des tickets

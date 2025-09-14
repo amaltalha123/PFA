@@ -22,17 +22,13 @@ const LandingPage = () => {
           
           <div className="container mx-auto px-6 relative">
             <div className={`flex flex-col items-center transition-all duration-700 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-              <h1 className="text-5xl md:text-6xl font-extrabold text-center mb-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+              <h1 className="text-5xl md:text-6xl font-extrabold text-center mb-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 to-purple-700">
                 Révolutionnez votre gestion de stagiaires
               </h1>
               <p className="text-xl text-gray-700 mb-10 max-w-2xl text-center">
                 Une plateforme complète pour simplifier le suivi, la gestion et l'évaluation de vos stagiaires avec efficacité.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button className="px-8 py-3 bg-white text-indigo-600 border border-indigo-600 font-medium rounded-lg shadow-sm hover:bg-indigo-50 transition duration-300">
-                  Voir une démo
-                </button>
-              </div>
+              
             </div>
             
             <div className={`mt-16 transition-all duration-1000 delay-300 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
@@ -65,7 +61,7 @@ const LandingPage = () => {
                   </svg>
                 </div>
                 <h3 className="text-xl font-semibold mb-3 text-gray-800">Suivi Simplifié</h3>
-                <p className="text-gray-600">Gardez un œil sur les missions, évaluations et avancements de chaque stagiaire en temps réel.</p>
+                <p className="text-gray-600">Gardez un œil sur les missions  et les tickets de support et avancements de chaque stagiaire en temps réel.</p>
               </div>
               
               <div className="bg-gradient-to-b from-white to-indigo-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100 group hover:-translate-y-2 transition-transform duration-300">
@@ -75,7 +71,7 @@ const LandingPage = () => {
                   </svg>
                 </div>
                 <h3 className="text-xl font-semibold mb-3 text-gray-800">Gestion Centralisée</h3>
-                <p className="text-gray-600">Accédez à toutes les informations, documents et historiques des stagiaires au même endroit.</p>
+                <p className="text-gray-600">Accédez à toutes les informations, documents des stagiaires au même endroit.</p>
               </div>
               
               <div className="bg-gradient-to-b from-white to-indigo-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100 group hover:-translate-y-2 transition-transform duration-300">
@@ -84,8 +80,8 @@ const LandingPage = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-gray-800">Rapports Automatisés</h3>
-                <p className="text-gray-600">Générez et consultez rapidement les rapports de stage, attestations et évaluations.</p>
+                <h3 className="text-xl font-semibold mb-3 text-gray-800">Attestations Automatisés</h3>
+                <p className="text-gray-600">Générez et consultez rapidement les attestations et les évaluations de stage .</p>
               </div>
             </div>
           </div>

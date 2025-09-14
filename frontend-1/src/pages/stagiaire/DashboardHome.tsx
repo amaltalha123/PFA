@@ -223,11 +223,10 @@ const updateNote = async () => {
   ];
 
     return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 py-6">
+    <div className="min-h-screen ">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* En-tête du tableau de bord */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900">Tableau de Bord</h1>
           <p className="text-gray-600 mt-2">Bienvenue, voici votre espace de travail personnel</p>
         </div>
 
@@ -244,7 +243,7 @@ const updateNote = async () => {
         {activeTab === 'calendar' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Calendrier compact */}
-            <div className="lg:col-span-3 bg-white rounded-xl shadow-md p-4">
+            <div className="lg:col-span-3 bg-white rounded-xl shadow-md p-4  bg-purple-50 py-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-2">
                   <button 

@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
     date_debut: DataTypes.DATE,
     date_fin : DataTypes.DATE,
     sujet: DataTypes.TEXT,
+    etat: {
+      type: DataTypes.ENUM('activé', 'archivé'),
+      allowNull: false,
+      defaultValue: 'activé', 
+    },
     type_stage: {
       type: DataTypes.ENUM('initiation', 'PFA', 'PFE'),
       allowNull: false,

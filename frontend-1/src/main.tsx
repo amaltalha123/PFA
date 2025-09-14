@@ -17,7 +17,7 @@ import DashboardHomeStagiaire from  './pages/stagiaire/DashboardHome'
 import AffectationsStagiaire from './pages/stagiaire/affectations'
 import AssignmentDetailStagiaire from './pages/stagiaire/AssignmentDetail';
 
-import Users from './pages/admin/Users';
+import Users from './pages/admin/user';
 import Departments from './pages/admin/Departments';
 import Assignments from './pages/admin/Assignments';
 import ActivateAccount from './pages/ActivateAccount';
@@ -42,8 +42,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="assignments/:id" element={<AssignmentDetail />} /> 
         </Route>
         <Route path="/encadrant" element={<DashboardLayoutEncadrant />}>
-        <Route index element={<DashboardHomeEncadrant />} />
-        <Route path="dashboard" element={<DashboardHomeEncadrant />} />
+        <Route index element={<AffectationsEncadrant />} />
+        {/*<Route path="dashboard" element={<DashboardHomeEncadrant />} /> */}
         <Route path="affectations" element={<AffectationsEncadrant />} />
         <Route path="AssignmentDetailEncadrant" element={<AssignmentDetailEncadrant />}>
           <Route index element={<AssignmentDetailEncadrant />} />

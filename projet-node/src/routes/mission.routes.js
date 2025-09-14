@@ -11,9 +11,9 @@ const verifyCollectionOwnership = require('../middleware/VerifyCollectionOwnersh
 const { Stage ,Encadrant,mission,Stagiaire } = require('../models');
 
 router.post('/mission/add/:id', authMiddleware, roleMiddleware('encadrant'), verifyOwnership(Stage, Encadrant,"encadrant"), missionController.addMission);
-router.delete('/mission/delete/:id', authMiddleware, roleMiddleware('encadrant'),verifyTicketOwnership(mission, Encadrant, Stage, "stage", "encadrant"), missionController.deleteMission);
-router.put('/mission/update/:id', authMiddleware, roleMiddleware('encadrant'),verifyTicketOwnership(mission, Encadrant, Stage, "stage", "encadrant"),missionUpdateMiddleware, missionController.updateMission);
+router.delete('/mission/delete/:id/:idStage', authMiddleware, roleMiddleware('encadrant'),verifyTicketOwnership(mission, Encadrant, Stage, "stage", "encadrant"), missionController.deleteMission);
+router.put('/mission/update/:id/:idStage', authMiddleware, roleMiddleware('encadrant'),verifyTicketOwnership(mission, Encadrant, Stage, "stage", "encadrant"),missionUpdateMiddleware, missionController.updateMission);
 router.get('/mission/all/:id', authMiddleware,roleMiddleware('encadrant','stagiaire'),verifyCollectionOwnership(mission), missionController.getMissionsByStage);
 
-router.put('/mission/done/:id',authMiddleware,roleMiddleware('stagiaire'),verifyTicketOwnership(mission, Stagiaire, Stage, "stage", "stagiare"),missionController.missionDone);
+router.put('/mission/done/:id/:idStage',authMiddleware,roleMiddleware('stagiaire'),verifyTicketOwnership(mission, Stagiaire, Stage, "stage", "stagiare"),missionController.missionDone);
 module.exports = router;

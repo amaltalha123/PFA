@@ -14,8 +14,8 @@ const Affectation: React.FC = () => {
 
   const fetchAssignments = async () => {
     try {
-      const response = await axiosClient.get('/statistic/stagiaire/toutMesStages');
-      setAssignments(response.data.stages);
+      const response = await axiosClient.get('/stage/all');
+      setAssignments(response.data.assignments);
     } catch (error) {
       console.error('Erreur:', error);
     }
@@ -26,7 +26,7 @@ const Affectation: React.FC = () => {
   }, []);
 
   return (
-    <div className="p-6">
+    <div className="p-6 ">
       <h1 className="text-2xl font-bold mb-6">Affectations de stages</h1>
      
       <AssignmentTable 

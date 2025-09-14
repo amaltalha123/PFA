@@ -34,17 +34,20 @@ const AssignmentPage: React.FC = () => {
   };
 
   return (
+    
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Affectations de stages</h1>
+    <h1 className="text-2xl font-bold mb-6">Affectations de stages</h1>
+      <div className="flex justify-end mb-6">
       <button 
-        onClick={() => openAddStageDialog(handleStageAdded)} // Passez la fonction de mise à jour ici
-        className="mb-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+        onClick={() => openAddStageDialog(handleStageAdded)}
+        className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-green-700 w-40 text-center"
       >
-        Ajouter un Stage
-      </button>
+        + Stage
+      </button></div>
+       
       <AssignmentTable 
         assignments={assignments} 
-        setAssignments={setAssignments} // Passez setAssignments ici
+        setAssignments={setAssignments} 
         openStagiaireDialog={openStagiaireDialog} 
         openEncadrantDialog={openEncadrantDialog} 
       />

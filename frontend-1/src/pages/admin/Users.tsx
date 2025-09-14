@@ -419,7 +419,7 @@ const Section: React.FC<SectionProps> = ({ title, data, onAdd, onDelete }) => (
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="bg-indigo-50">
-            <th className="p-3 border-b">Avatar</th> {/* Nouvelle colonne Avatar */}
+            <th className="p-3 border-b">Avatar</th> 
             <th className="p-3 border-b">Nom</th>
             <th className="p-3 border-b">Prénom</th>
             <th className="p-3 border-b">Email</th>
@@ -438,7 +438,7 @@ const Section: React.FC<SectionProps> = ({ title, data, onAdd, onDelete }) => (
                 <th className="p-3 border-b">Département</th>
               </>
             )}
-            <th className="p-3 border-b text-center">Actions</th>
+            <th className="p-3 border-b">Actions</th>
           </tr>
         </thead>
 
@@ -454,7 +454,7 @@ const Section: React.FC<SectionProps> = ({ title, data, onAdd, onDelete }) => (
                     {avatar.initials}
                   </div>
                 );
-              })()} {/* Affichage de l'avatar */}
+              })()} 
         </div>
       </td>
       <td className="p-3 border-b">{u.nom}</td>
@@ -485,9 +485,9 @@ const Section: React.FC<SectionProps> = ({ title, data, onAdd, onDelete }) => (
           <td className="p-3 border-b">{u.Encadrant && u.Encadrant.Departement ? u.Encadrant.Departement.nom : 'N/A'}</td>
         </>
       )}
-      <td className="p-3 border-b flex justify-center gap-3">
+      <td className="p-3 border-b">
         <button
-          className="text-red-500 hover:text-red-700"
+          className="text-red-500 hover:text-red-700 text-2xl"
           onClick={() => onDelete(u.id!)}
         >
           <FiTrash2 />

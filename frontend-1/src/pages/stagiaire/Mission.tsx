@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { XMarkIcon, ExclamationTriangleIcon, CheckIcon } from '@heroicons/react/24/outline';
+import { ExclamationTriangleIcon, CheckIcon } from '@heroicons/react/24/outline';
 import axiosClient from '../../api/axiosClient';
 
 type TaskStatus = 'En cours' | 'Échéantes' | 'Terminé';
@@ -64,7 +64,16 @@ const Mission: React.FC = () => {
 
   const handleMarkAsDone = async (taskId: number) => {
     try {
-      const response = await axiosClient.put(`/mission/done/${taskId}`);
+      const selectedAssignment = localStorage.getItem('selectedAssignment');
+        if (!selectedAssignment) {
+          console.error('Aucun assignment sélectionné dans le localStorage.');
+          return;
+        }
+
+        const assignment = JSON.parse(selectedAssignment);
+        const assignmentId = assignment.id;
+      console.log(taskId);
+      const response = await axiosClient.put(`/mission/done/${taskId}/${assignmentId}`);
       if (response.data.success) {
         setTasks(tasks.map(task => (task.id === taskId ? { ...task, status: 'Terminé' } : task)));
       } else {

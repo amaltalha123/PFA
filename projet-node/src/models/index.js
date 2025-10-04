@@ -55,9 +55,9 @@ Rapport.belongsTo(Stage, { foreignKey: 'stage_id' });
 
 
 // // Synchronisation de la BDD
-// sequelize.sync({ alter: true })
-// .then(() => console.log("Modèles synchronisés avec la base de données."))
-// .catch(err => console.error(" Erreur de synchronisation :", err));
+sequelize.sync({ alter: true })
+.then(() => console.log("Modèles synchronisés avec la base de données."))
+.catch(err => console.error(" Erreur de synchronisation :", err));
 
 // Exporter tous les modèles
 module.exports = {
